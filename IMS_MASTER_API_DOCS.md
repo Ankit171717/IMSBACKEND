@@ -32,6 +32,8 @@ This document provides a comprehensive list of API endpoints for the User, Engin
       "state": "String" 
     }
     ```
+- `GET /user/profile`: Fetches current user/company profile.
+  - *Payload:* `{}`
 
 ### 2. Service Discovery (Home)
 - `POST /user/engineers/search`: Search for engineers based on Machine Type, Size, and Engineer Type.

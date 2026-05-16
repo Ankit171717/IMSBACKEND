@@ -3,6 +3,7 @@ const authController = require('../controllers/auth.controller.js');
 const callController = require('../controllers/call.controller.js');
 const subscriptionController = require('../controllers/subscription.controller.js');
 const userAuthController = require('../controllers/userAuth.controller.js');
+const userController = require('../controllers/user.controller.js');
 const userEngineerController = require('../controllers/userEngineer.controller.js');
 const { authenticate } = require('../middleware/auth.middleware.js');
 
@@ -12,6 +13,8 @@ const requireUser = authenticate(['USER']);
 router.post('/auth/send-otp', authController.sendOTP);
 router.post('/auth/verify-otp', authController.verifyOTP);
 router.post('/auth/register', userAuthController.register);
+
+router.get('/profile', requireUser, userController.getProfile);
 
 router.post('/engineers/search', requireUser, userEngineerController.searchEngineers);
 router.get('/engineers/:id', requireUser, userEngineerController.getEngineerById);

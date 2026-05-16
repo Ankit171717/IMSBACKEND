@@ -18,6 +18,8 @@ const authenticate = (allowedRoles = []) => (req, res, next) => {
             role: decoded.role || 'USER'
         };
 
+        console.log(`this is token: ${JSON.stringify(decoded, null, 2)}`);
+        
         if (allowedRoles.length && !allowedRoles.includes(req.user.role)) {
             return res.status(403).json({ message: 'Access denied' });
         }
