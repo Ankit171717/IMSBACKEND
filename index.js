@@ -25,9 +25,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
 // IMS documented v1 API routes
-app.use('/v1/user', userV1Routes);
-app.use('/v1/engineer', engineerV1Routes);
-app.use('/v1/admin', adminV1Routes);
+app.use('/api/v1/user', userV1Routes);
+app.use('/api/v1/engineer', engineerV1Routes);
+app.use('/api/v1/admin', adminV1Routes);
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Route not found' });
