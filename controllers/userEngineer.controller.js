@@ -1,7 +1,10 @@
 const Engineer = require('../models/engineer.model.js');
 const Subscription = require('../models/subscription.model.js');
 const User = require('../models/user.model.js');
-const { asyncHandler, requireFields } = require('../utils/api.js');
+const { asyncHandler } = require('../utils/api.js');
+
+const escapeRegex = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const normalizeSearchValue = (value) => (typeof value === 'string' ? value.trim() : value);
 
 const maskPhone = (phone = '') => {
     if (phone.length <= 4) {
@@ -36,17 +39,19 @@ const serializeEngineerForUser = (engineer, canViewPhone) => {
 };
 
 exports.searchEngineers = asyncHandler(async (req, res) => {
-    requireFields(req.body, ['machineType', 'size', 'engineerType', 'latitude', 'longitude']);
-
-    const { machineType, engineerType } = req.body;
+    const city = normalizeSearchValue(req.body?.city);
+    const machineType = normalizeSearchValue(req.body?.machineType);
     const query = {
         status: 'ACTIVE',
-        verificationStatus: 'VERIFIED',
-        selectedMachines: machineType
+        verificationStatus: 'VERIFIED'
     };
 
-    if (engineerType) {
-        query.skills = { $regex: engineerType, $options: 'i' };
+    if (city) {
+        query.location = { $regex: escapeRegex(city), $options: 'i' };
+    }
+
+    if (machineType) {
+        query.selectedMachines = { $regex: escapeRegex(machineType), $options: 'i' };
     }
 
     const engineers = await Engineer.find(query)
