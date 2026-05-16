@@ -1,3 +1,4 @@
 node_modules/
 .env
 .DS_Store
+.IMS_MASTER_API_DOCS.md
