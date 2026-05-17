@@ -15,7 +15,9 @@ router.post('/auth/verify-otp', authController.verifyOTP);
 router.post('/auth/register', userAuthController.register);
 
 router.get('/profile', requireUser, userController.getProfile);
+router.put('/profile/update', requireUser, userController.updateProfile);
 
+router.get('/engineers/search', requireUser, userEngineerController.searchEngineers);
 router.post('/engineers/search', requireUser, userEngineerController.searchEngineers);
 router.get('/engineers/:id', requireUser, userEngineerController.getEngineerById);
 

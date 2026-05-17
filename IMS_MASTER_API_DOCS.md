@@ -36,7 +36,9 @@ This document provides a comprehensive list of API endpoints for the User, Engin
   - *Payload:* `{}`
 
 ### 2. Service Discovery (Home)
-- `POST /user/engineers/search`: Fetches all active verified engineers by default, or filters by city and machine type when provided.
+- `GET /user/engineers/search`: Fetches all active verified engineers by default, or filters by city and machine type when provided.
+  - *Query:* `?city=String&machineType=String`
+- `POST /user/engineers/search`: Same search using request body.
   - *Payload:* `{ "city": "String (optional)", "machineType": "String (optional)" }`
 - `GET /user/engineers/{id}`: Get detailed profile of a specific engineer.
   - *Payload:* `{}` (Path parameter: `id`)

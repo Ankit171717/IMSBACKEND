@@ -1,5 +1,5 @@
 const User = require('../models/user.model.js');
-const { asyncHandler } = require('../utils/api.js');
+const { asyncHandler, pick } = require('../utils/api.js');
 
 exports.getProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id);
@@ -9,6 +9,30 @@ exports.getProfile = asyncHandler(async (req, res) => {
     }
 
     res.json({ user });
+});
+
+// Update own profile (user)
+exports.updateProfile = asyncHandler(async (req, res) => {
+    const allowedFields = [
+        'companyName', 'ownerName', 'gstNumber', 'address', 'city', 'selectedPostOffice',
+        'district', 'state', 'pincode', 'email'
+    ];
+
+    const payload = pick(req.body, allowedFields);
+
+    const user = await User.findByIdAndUpdate(req.user.id, payload, {
+        new: true,
+        runValidators: true
+    });
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+        message: 'User profile updated successfully',
+        user
+    });
 });
 
 // Create a new user
