@@ -15,6 +15,7 @@ const authenticate = (allowedRoles = []) => (req, res, next) => {
         req.user = {
             id: decoded.id,
             phone: decoded.phone,
+            email: decoded.email,
             role: decoded.role || 'USER'
         };
 
